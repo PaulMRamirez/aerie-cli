@@ -20,7 +20,7 @@ This short procedure will get you up and running with the basics of the CLI.
 
    1. If you've been provided a Configuration JSON, reference that file
 
-   2. If you don't have already have a Configuration JSON, copy the following to a JSON file for a local Aerie deployment (replacing the username with your own):
+   2. If you don't have already have a Configuration JSON, copy the following to a JSON file for a local PlanDev deployment (replacing the username with your own):
 
       ```json
       [

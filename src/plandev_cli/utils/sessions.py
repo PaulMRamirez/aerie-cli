@@ -134,8 +134,8 @@ def start_session_from_configuration(
 
     Args:
         configuration (PlanDevHostConfiguration): Configuration of host to connect
-        username (str, optional): Aerie username.
-        password (str, optional): Aerie password.
+        username (str, optional): PlanDev username.
+        password (str, optional): PlanDev password.
         secret_post_vars (Dict[str, str], optional): Optionally provide values for some or all secret post request variable values. Defaults to None.
         force (bool, optional): Force connection to PlanDev host and ignore version compatibility. Defaults to False.
 

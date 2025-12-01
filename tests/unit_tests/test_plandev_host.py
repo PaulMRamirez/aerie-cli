@@ -39,11 +39,11 @@ def get_mock_plandev_host(json: Dict = None, text: str = None, ok: bool = True) 
     return PlanDevHost("", "", mock_session)
 
 
-def test_check_aerie_version():
+def test_check_plandev_version():
     plandev_host = get_mock_plandev_host(
         json={"version": COMPATIBLE_PLANDEV_VERSIONS[0]})
 
-    plandev_host.check_aerie_version()
+    plandev_host.check_plandev_version()
 
 
 def test_authenticate_invalid_version(capsys, monkeypatch):
@@ -91,7 +91,7 @@ def test_no_version_endpoint():
     plandev_host = get_mock_plandev_host(text="blah PlanDev Gateway blah", ok=True)
 
     with pytest.raises(RuntimeError) as e:
-        plandev_host.check_aerie_version()
+        plandev_host.check_plandev_version()
 
     assert "Incompatible PlanDev version: host version unknown" in str(e.value)
 
@@ -101,6 +101,6 @@ def test_version_broken_gateway():
         text="502 Bad Gateway or something", ok=True)
 
     with pytest.raises(RuntimeError) as e:
-        plandev_host.check_aerie_version()
+        plandev_host.check_plandev_version()
 
     assert "Bad response from PlanDev Gateway" in str(e.value)

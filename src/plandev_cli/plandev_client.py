@@ -44,10 +44,10 @@ class PlanDevClient:
         self.plandev_host = plandev_host
 
     def get_activity_plan_by_id(self, plan_id: int, full_args: str = None) -> ActivityPlanRead:
-        """Download activity plan from Aerie
+        """Download activity plan from PlanDev
 
         Args:
-            plan_id (int): ID of the plan in Aerie
+            plan_id (int): ID of the plan in PlanDev
             full_args (str): comma separated list of activity types for which to
             get full arguments, otherwise only modified arguments are returned.
             Set to "true" to get full arguments for all activity types.
@@ -804,7 +804,7 @@ class PlanDevClient:
 
         Args:
             activity_name (str): Model name of the activity
-            model_id (int): ID of the model in Aerie
+            model_id (int): ID of the model in PlanDev
 
         Returns:
             str: Contents of the interface file
@@ -854,7 +854,7 @@ class PlanDevClient:
             description (str, Optional): Description of the expansion rule
 
         Returns:
-            int: Expansion Rule ID in Aerie
+            int: Expansion Rule ID in PlanDev
         """
 
         create_expansion_logic_query = """
@@ -1196,7 +1196,7 @@ class PlanDevClient:
         """Get the IDs of all simulated activities in a simulation dataset
 
         Args:
-            simulation_dataset_id (int): ID of Aerie simulation dataset
+            simulation_dataset_id (int): ID of PlanDev simulation dataset
 
         Returns:
             List[int]: List of simulated activity IDs
@@ -1223,7 +1223,7 @@ class PlanDevClient:
         return simulated_activity_ids
 
     def get_expanded_sequence(self, seq_id: str, simulation_dataset_id: int) -> Dict:
-        """Get SeqJson from an expanded Aerie sequence
+        """Get SeqJson from an expanded PlanDev sequence
 
         Args:
             seq_id (str): ID of the sequence
@@ -1414,7 +1414,7 @@ class PlanDevClient:
             )
         )["content"]
 
-        # TODO add Aerie version below once the API supports this
+        # TODO add PlanDev version below once the API supports this
         # Include metadata about command dictionary in header
         typescript_dictionary_string = "\n".join(
             [
@@ -1457,7 +1457,7 @@ class PlanDevClient:
 
         Args:
             dictionary (str): Contents from XML dictionary file (newlne-delimited)
-            persist (bool, optional): Persist the uploaded source dictionary in Aerie. Defaults to True.
+            persist (bool, optional): Persist the uploaded source dictionary in PlanDev. Defaults to True.
 
         Returns:
             int: Dictionary ID
@@ -2080,7 +2080,7 @@ class PlanDevClient:
 
         Get the type information for each resource in a mission model.
 
-        The schema format is described in the Aerie documentation [here](https://nasa-ammos.github.io/aerie-docs/mission-modeling/advanced-value-schemas/#value-schemas-in-json).
+        The schema format is described in the PlanDev documentation [here](https://nasa-ammos.github.io/plandev-docs/mission-modeling/advanced-value-schemas/#value-schemas-in-json).
 
         Args:
             model_id (int): Mission model for resources
@@ -2124,7 +2124,7 @@ class PlanDevClient:
     def add_directive_metadata_schemas(self, schemas: list) -> list:
         """Add metadata schemas
 
-        The schema format should follow the documentation [here](https://nasa-ammos.github.io/aerie-docs/planning/activity-directive-metadata/).
+        The schema format should follow the documentation [here](https://nasa-ammos.github.io/plandev-docs/planning/activity-directive-metadata/).
 
         Args:
             schemas (list): a list of the schemas to add

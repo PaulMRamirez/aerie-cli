@@ -34,7 +34,7 @@ class CommandContext:
             if client.plandev_host.plandev_jwt is None:
                 raise RuntimeError(f"Unauthenticated PlanDev session")
             client.plandev_host.session.headers["x-hasura-admin-secret"] = cls.hasura_admin_secret
-            client.plandev_host.session.headers["x-hasura-role"] = "aerie_admin"
+            client.plandev_host.session.headers["x-hasura-role"] = "plandev_admin"
             client.plandev_host.session.headers["x-hasura-user-id"] = client.plandev_host.plandev_jwt.username
 
         return client

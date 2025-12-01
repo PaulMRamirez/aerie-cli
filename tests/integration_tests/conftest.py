@@ -31,10 +31,10 @@ USERNAME = "a"
 PASSWORD = "a"
 ANONYMOUS_LOCALHOST_CONF = PlanDevHostConfiguration("localhost", GRAPHQL_URL, GATEWAY_URL)
 
-# Additional usernames to register with Aerie
+# Additional usernames to register with PlanDev
 ADDITIONAL_USERS = ["user1", "user2", "user3"]
 
-# This should only ever be set to the admin secret for a local instance of aerie
+# This should only ever be set to the admin secret for a local instance of PlanDev
 HASURA_ADMIN_SECRET = os.environ.get("HASURA_GRAPHQL_ADMIN_SECRET")
 
 # Test constants
@@ -77,7 +77,7 @@ upload_configurations(CONFIGURATION_PATH)
 # Login as the main username, set role, and store session as persistent
 localhost_conf = PersistentConfigurationManager.get_configuration_by_name("localhost")
 plandev_host = start_session_from_configuration(localhost_conf, USERNAME, PASSWORD)
-plandev_host.change_role("aerie_admin")
+plandev_host.change_role("plandev_admin")
 PersistentSessionManager.set_active_session(plandev_host)
 
 client = None

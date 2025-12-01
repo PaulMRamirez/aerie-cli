@@ -93,7 +93,7 @@ class PlanDevHost:
         self.graphql_url = graphql_url
         self.gateway_url = gateway_url
         self.configuration_name = configuration_name
-        self.aerie_jwt = None
+        self.plandev_jwt = None
         self.active_role = None
 
     def post_to_graphql(self, query: str, **kwargs) -> Dict:
@@ -177,7 +177,7 @@ class PlanDevHost:
                 )
 
     def post_to_gateway_files(self, file_name: str, file_contents: bytes) -> Dict:
-        """Issue a post request to upload a file via the Aerie gateway
+        """Issue a post request to upload a file via the PlanDev gateway
 
         Args:
             file_name (str): Name of the file being uploaded
@@ -202,15 +202,15 @@ class PlanDevHost:
             raise RuntimeError(f"Error uploading file: {file_name}")
 
     def change_role(self, new_role: str) -> None:
-        """Change role for Aerie interaction
+        """Change role for PlanDev interaction
 
         Args:
             new_role (str): String name of new role.
         """
 
-        if new_role not in self.aerie_jwt.allowed_roles:
+        if new_role not in self.plandev_jwt.allowed_roles:
             raise ValueError(
-                f"Cannot set role {new_role}. Must be one of: {', '.join(self.aerie_jwt.allowed_roles)}"
+                f"Cannot set role {new_role}. Must be one of: {', '.join(self.plandev_jwt.allowed_roles)}"
             )
 
         self.active_role = new_role
@@ -224,7 +224,7 @@ class PlanDevHost:
         Returns:
             bool: True if there were no errors in a ping against GATEWAY_URL/auth/session, False otherwise
         """
-        if self.aerie_jwt is None:
+        if self.plandev_jwt is None:
             return False
 
         try:
@@ -239,11 +239,11 @@ class PlanDevHost:
             return False
 
     def get_auth_headers(self):
-        if self.aerie_jwt is None:
+        if self.plandev_jwt is None:
             return {}
 
         return {
-            "Authorization": f"Bearer {self.aerie_jwt.encoded_jwt}",
+            "Authorization": f"Bearer {self.plandev_jwt.encoded_jwt}",
             "x-hasura-role": self.active_role,
         }
 
@@ -274,7 +274,7 @@ class PlanDevHost:
     def authenticate(self, username: str, password: str = None, force: bool = False):
 
         try:
-            self.check_aerie_version()
+            self.check_plandev_version()
         except PlanDevHostVersionError as e:
             if force:
                 print("Warning: " + e.args[0])
@@ -291,13 +291,13 @@ class PlanDevHost:
         except RuntimeError:
             raise RuntimeError("Failed to authenticate")
 
-        self.aerie_jwt = PlanDevJWT(resp_json["token"])
-        self.active_role = self.aerie_jwt.default_role
+        self.plandev_jwt = PlanDevJWT(resp_json["token"])
+        self.active_role = self.plandev_jwt.default_role
 
         if not self.check_auth():
             raise RuntimeError(f"Failed to open session")
 
-    def check_aerie_version(self) -> None:
+    def check_plandev_version(self) -> None:
         """Assert that the PlanDev host is a compatible version
 
         Raises a `RuntimeError` if the host appears to be incompatible.
