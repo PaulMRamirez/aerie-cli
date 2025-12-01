@@ -4,16 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Project Overview
 
-Aerie-CLI is a command-line interface and Python API for interacting with NASA's Aerie mission planning system. It provides both interactive CLI commands and a programmatic Python interface for managing mission plans, models, scheduling, and more.
+PlanDev-CLI is a command-line interface and Python API for interacting with NASA's PlanDev mission planning system. It provides both interactive CLI commands and a programmatic Python interface for managing mission plans, models, scheduling, and more.
 
 ## Repository Structure
 
 ```
-src/aerie_cli/
-├── __main__.py          # Entry point (aerie-cli command)
+src/plandev_cli/
+├── __main__.py          # Entry point (plandev-cli command)
 ├── app.py               # Typer application setup
-├── aerie_host.py        # AerieHost class - handles API connections
-├── aerie_client.py      # AerieClient class - main API interface
+├── plandev_host.py      # PlanDevHost class - handles API connections
+├── plandev_client.py    # PlanDevClient class - main API interface
 ├── persistent.py        # Persistent session/configuration storage
 ├── commands/            # CLI command modules
 │   ├── configurations.py  # Host configuration management
@@ -33,8 +33,8 @@ src/aerie_cli/
     └── serialization.py # JSON/data serialization
 
 tests/
-├── unit_tests/          # Unit tests (can run without Aerie)
-└── integration_tests/   # Integration tests (require local Aerie)
+├── unit_tests/          # Unit tests (can run without PlanDev)
+└── integration_tests/   # Integration tests (require local PlanDev)
 ```
 
 ## Development Setup
@@ -56,11 +56,11 @@ poetry install
 ### Running Tests
 
 ```bash
-# Unit tests (no Aerie instance required)
+# Unit tests (no PlanDev instance required)
 cd tests
 python3 -m pytest unit_tests/
 
-# Integration tests (requires local Aerie via docker-compose)
+# Integration tests (requires local PlanDev via docker-compose)
 docker-compose -f docker-compose-test.yml up -d
 python3 -m pytest integration_tests/
 ```
@@ -82,32 +82,32 @@ flake8 src/ tests/
 
 ```bash
 # View help
-aerie-cli --help
+plandev-cli --help
 
-# Activate a session with an Aerie host
-aerie-cli activate
+# Activate a session with a PlanDev host
+plandev-cli activate
 
 # Check session status
-aerie-cli status
+plandev-cli status
 
 # List plans
-aerie-cli plans list
+plandev-cli plans list
 ```
 
 ## Key Architecture Patterns
 
-### AerieHost and AerieClient
+### PlanDevHost and PlanDevClient
 
-- `AerieHost`: Manages connection to an Aerie instance, handles authentication, and issues GraphQL requests
-- `AerieClient`: Provides high-level API methods built on top of AerieHost
+- `PlanDevHost`: Manages connection to a PlanDev instance, handles authentication, and issues GraphQL requests
+- `PlanDevClient`: Provides high-level API methods built on top of PlanDevHost
 
 ```python
-from aerie_cli.aerie_client import AerieClient
-from aerie_cli.aerie_host import AerieHost
+from plandev_cli.plandev_client import PlanDevClient
+from plandev_cli.plandev_host import PlanDevHost
 
-host = AerieHost(graphql_url, gateway_url)
+host = PlanDevHost(graphql_url, gateway_url)
 host.authenticate(username, password)
-client = AerieClient(host)
+client = PlanDevClient(host)
 ```
 
 ### CLI Commands with Typer
@@ -134,7 +134,7 @@ class ActivityPlan:
 ## Important Files
 
 - `pyproject.toml` - Project configuration and dependencies (Poetry)
-- `docker-compose-test.yml` - Local Aerie instance for integration tests
+- `docker-compose-test.yml` - Local PlanDev instance for integration tests
 - `.pre-commit-config.yaml` - Pre-commit hooks configuration
 - `.flake8` - Flake8 linting configuration
 

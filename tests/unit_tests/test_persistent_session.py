@@ -5,7 +5,7 @@ from pathlib import Path
 
 from plandev_cli import persistent
 
-from plandev_cli.aerie_host import PlanDevHost
+from plandev_cli.plandev_host import PlanDevHost
 from plandev_cli.persistent import PersistentSessionManager
 
 
